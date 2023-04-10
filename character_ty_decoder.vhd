@@ -23,8 +23,38 @@ architecture rtl of character_ty_decoder is
     
 begin
 
+    L_DECODER: process (clk,reset_n)
+    begin
+        if(reset_n= '0')then
+            data_out <=0;
+            c_type <=0;
+        elsif (rising_edge(clk))then
 
+            case data_in is
+                when "16" |"F016"=>  -- 1
+                    data_out<= x"31";
+                when "1E" |"F01E"=>  -- 2
 
+                when "26" |"F026"=>  -- 3
+
+                when "25" |"F025"=>  -- 4
+
+                when "2E" |"F02E"=>  -- 5
+
+                when "36" |"F036"=>  -- 6
+
+                when "3D" |"F03D"=>  -- 7
+
+                when "3E" |"F03E"=>  -- 8
+
+                when "46" |"F046"=>  -- 9
+
+                when "45" |"F045"=>  -- 0
+        
+            end case;
+
+        end if;
+    end process;
 
 
 end architecture rtl;
