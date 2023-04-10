@@ -36,7 +36,7 @@ begin
         end if;
     end process;
     
-    L_OUTPUT: cout <= '1' when counter=0 else '0' ;
+    L_OUTPUT: cout <= '1' when counter = 0 else '0' ;
 
 end architecture rtl;
 --------------------------------------------------
