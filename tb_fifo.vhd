@@ -2,7 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 -----------------------------------------------------------------------------------
-entity testbench_fifp is
+entity testbench_fifo is
 end entity testbench_fifo;
 -----------------------------------------------------------------------------------
 architecture buffer_testbench of testbench_fifo is 
@@ -62,7 +62,6 @@ BUF: entity work.edac_protected_fifo(rtl)
 		uncorrectable_error		=>	open 	
 --------------------------------------------------------------------------
 	);
-
 CLOCK: process begin 
 wait for clk_p/2;
 clk 		    <= not clk;

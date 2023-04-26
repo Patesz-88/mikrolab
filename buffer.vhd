@@ -4,7 +4,7 @@ use ieee.numeric_std.all;
 ---------------------------------------------------------------------------------------------------
 entity buffer_interface is
 	generic(
-		depth: integer range from 0 to 65535;
+		depth: integer range 0 to 65535;
 		
 	);
 	port (
