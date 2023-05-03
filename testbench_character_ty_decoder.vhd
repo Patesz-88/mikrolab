@@ -14,15 +14,13 @@ architecture behavior of testbench_character_ty_decoder is
     signal state:           std_logic := '0';
     signal data_in:         std_logic_vector (7 downto 0):="00000000";
     signal data_out:        std_logic_vector (7 downto 0):="00000000";
-    signal c_type:          std_logic_vector (1 downto 0):="00";
+    signal shift:           std_logic:='0';
+    signal release:         std_logic:='0';
 
 begin
 
     L_DUT:  entity work.character_ty_decoder(rtl)
 
-    generic map(
-        shift =>0 
-    )
 
     port map (
         clk        => clk,
@@ -30,25 +28,27 @@ begin
         state      => state,
         data_in     =>data_in,
         data_out   => data_out,
-        c_type     => c_type
+        shift      => shift,
+        release    => release
     );
 
     L_TEST_SEQUENCE: process
     begin
         wait for 200 ns;  
         reset_n <= '1';
-        wait for 200 ns;
-        data_in <= b"00101110";
-        wait for 100 ns;
-        data_in <= b"01000100";
+        wait for 200 ns;data_in <= b"00101110";
+        wait for 100 ns;data_in <= b"01000100";
+        
         wait for 100 ns;
         state <='1';
-        wait for 100 ns;
-        data_in <= b"01000100";
-        wait for 200 ns;
-        data_in <= b"00101110";
-        wait for 200 ns;
-        data_in <=b"00011010";
+        wait for 100 ns;data_in <= b"01000100";
+        wait for 200 ns;data_in <= b"00101110";
+        wait for 200 ns;data_in <=b"00011010";
+        wait for 200 ns;data_in <=b"00000000";
+        wait for 200 ns;data_in <=b"00011010";
+        wait for 200 ns;data_in <=b"00010010";
+        wait for 200 ns;data_in <= b"00101110";
+
 
         wait for 10000 ns;
         

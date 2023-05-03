@@ -3,9 +3,6 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 ----------------------------------
 entity character_ty_decoder is
-    generic (
-        shift: integer range 0 to 16
-    );
 
     port(
         clk:        in std_logic;
@@ -13,7 +10,9 @@ entity character_ty_decoder is
         state:      in std_logic;
         data_in:    in std_logic_vector (7 downto 0);
         data_out:   out std_logic_vector (7 downto 0);
-        c_type:     out std_logic_vector (1 downto 0)
+        shift:      out std_logic;
+        release:    out std_logic
+
     );
 
 
@@ -29,11 +28,14 @@ begin
     begin
         if(reset_n= '0')then
             data_out <="00000000";
-            c_type <="00";
             ascii<="00000000";
+            shift<='0';
+            release <='0';
 
         elsif (rising_edge(clk))then
           ps2_code:=data_in;
+          release<='0';
+          shift<='0';
             case ps2_code is
                 when x"16" => ascii <= x"31"; -- 1
                 when x"1E" => ascii <= x"32"; -- 2
@@ -45,6 +47,8 @@ begin
                 when x"3E" => ascii <= x"38"; -- 8
                 when x"46" => ascii <= x"39"; -- 9
                 when x"45" => ascii <= x"30"; -- 0
+                when x"00" => release <= '1'; ascii<= x"00"; --
+                when x"12" => shift <= '1'; ascii<= x"00"; --
                 WHEN OTHERS => NULL;
                 end case;
 
