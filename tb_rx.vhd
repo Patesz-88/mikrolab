@@ -20,7 +20,9 @@ signal rx:		        std_logic := '1';
 
 signal wd_kick:      std_logic := '1';
 
-signal data_out:	   std_logic_vector (data_bits downto 0);
+signal data:	   std_logic_vector (data_bits downto 0);
+signal data_out: std_logic_vector(data_bits-1 downto 0);
+
 signal parity_err:  std_logic;
 signal ready:       std_logic := '0';
 
@@ -51,7 +53,7 @@ RECIEVER: entity work.uart_transceiver(rtl)
 		ready_2_read				             => ready,
 		read_strobe				              => get_data,
 		read_strobe_ack				          => open,
-		data_out					        	       => data_out,
+		data_out					        	       => data,
 		ready_2_write			    	    	   => open,
 		write_strobe				             => '0',
 		write_strobe_ack				         => open,
@@ -87,17 +89,17 @@ RECIEVER: entity work.uart_transceiver(rtl)
   wait for 1*cpb*clk_p;
   rx <= '1';
   wait for 1*cpb*clk_p;
-  rx <= '0';
+  rx <= '1';
+  wait for 1*cpb*clk_p;
+  rx <= '1';
   wait for 1*cpb*clk_p;
   rx <= '1';
   wait for 1*cpb*clk_p;
   rx <= '0';
   wait for 1*cpb*clk_p;
-  rx <= '1';
-  wait for 1*cpb*clk_p;
   rx <= '0';
   wait for 1*cpb*clk_p;
-  rx <= '1';
+  rx <= '0';
   wait for 1*cpb*clk_p;
   rx <= '0';
   
@@ -115,17 +117,17 @@ RECIEVER: entity work.uart_transceiver(rtl)
   wait for 1*cpb*clk_p;
   rx <= '0';
   wait for 1*cpb*clk_p;
-  rx <= '1';
+  rx <= '0';
+  wait for 1*cpb*clk_p;
+  rx <= '0';
   wait for 1*cpb*clk_p;
   rx <= '0';
   wait for 1*cpb*clk_p;
   rx <= '1';
   wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
   rx <= '1';
   wait for 1*cpb*clk_p;
-  rx <= '0';
+  rx <= '1';
   wait for 1*cpb*clk_p;
   rx <= '1';
   
@@ -139,6 +141,10 @@ RECIEVER: entity work.uart_transceiver(rtl)
   
   
     
+end process;
+
+ALWAYS: process (clk) begin
+data_out <= data(data_bits-1 downto 0);
 end process;
 
 end architecture;
