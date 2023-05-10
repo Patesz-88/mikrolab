@@ -25,10 +25,10 @@ begin
     begin
         if ( reset_n = '0' ) then counter <= 0;
         elsif ( rising_edge(clk) ) then
-            if (rx='0') then
+            if (rx='1') then
                 
                 counter <= countdown;
-                elsif(counter > 0 )then
+            elsif(counter > 0 )then
                 counter <= counter - 1;
                 
                 
@@ -36,7 +36,7 @@ begin
         end if;
     end process;
     
-    L_OUTPUT: cout <= '1' when counter = 0 else '0' ;
+    L_OUTPUT: cout <= '1' when counter=0 else '0' ;
 
 end architecture rtl;
 --------------------------------------------------
