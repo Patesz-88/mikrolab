@@ -7,7 +7,7 @@ end entity testbench_fifo;
 -----------------------------------------------------------------------------------
 architecture buffer_testbench of testbench_fifo is 
 
-constant clk_p: 	time 			:= 5ns;
+constant clk_p: 	time 			:= 5 ns;
 
 signal clk:			std_logic 	:= '0';
 signal reset_n:	std_logic	:= '0';

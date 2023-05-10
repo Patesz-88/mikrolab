@@ -28,7 +28,7 @@ begin
             if (rx='1') then
                 
                 counter <= countdown;
-            elsif(counter > 0 )then
+                elsif(counter > 0 )then
                 counter <= counter - 1;
                 
                 
@@ -36,7 +36,7 @@ begin
         end if;
     end process;
     
-    L_OUTPUT: cout <= '1' when counter=0 else '0' ;
+    L_OUTPUT: cout <= '1' when counter = 0 else '0' ;
 
 end architecture rtl;
 --------------------------------------------------

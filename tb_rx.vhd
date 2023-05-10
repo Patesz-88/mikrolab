@@ -7,7 +7,7 @@ end entity testbench_uart;
 -----------------------------------------------------------------------------------
 architecture uart_testbench of testbench_uart is 
 
-constant clk_p: 	     time 		   := 5ns;
+constant clk_p: 	     time 		   := 5 ns;
 constant data_bits:   integer   := 8;
 constant baude_rate:  integer   := 9600;
 --constant cpb:         integer   := 20833;

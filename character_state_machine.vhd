@@ -45,7 +45,7 @@ elsif(rising_edge(clk)) then
     wd_kick <= '1';
     write <= '0';
     if("00000000" = ascii_in) then
-      wd_kick <= '0';
+      wd_kick <= '1';
       if('1' = got_key_up) then await_key_up <= '1';
    	  elsif('1' = got_shift) then is_shift_down <= not await_key_up; await_key_up <= '0';
  	    end if;
