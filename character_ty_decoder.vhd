@@ -36,6 +36,7 @@ begin
           ps2_code:=data_in;
           release<='0';
           shift<='0';
+          ascii<="00000000";
             case ps2_code is
                 when x"16" => ascii <= x"31"; -- 1
                 when x"1E" => ascii <= x"32"; -- 2
