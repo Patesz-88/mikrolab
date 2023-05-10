@@ -21,6 +21,7 @@ end entity character_ty_decoder;
 architecture rtl of character_ty_decoder is
     
     signal ascii        :STD_LOGIC_VECTOR(7 downto 0);
+    signal last_code    :STD_LOGIC_VECTOR(7 downto 0);
 begin
   
     L_DECODER: process (clk,reset_n)
@@ -37,6 +38,7 @@ begin
           release<='0';
           shift<='0';
           ascii<="00000000";
+          if(ps2_code/=last_code) then
             case ps2_code is
                 when x"16" => ascii <= x"31"; -- 1
                 when x"1E" => ascii <= x"32"; -- 2
@@ -114,9 +116,11 @@ begin
                   WHEN OTHERS => NULL;
                 END CASE;
               END IF;
-            
+
+          end if;
 
         end if;
+        last_code<=ps2_code;
         data_out<= ascii;
     end process;
 
