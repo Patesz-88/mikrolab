@@ -4,7 +4,7 @@ use ieee.numeric_std.all;
 --------------------------------------------------
 entity watchdog is
     generic (
-        countdown: integer range 0 to 128 :=128-- kérdéses érték
+        countdown: integer range 0 to 1024 :=512-- kérdéses érték
     );
 
     port (

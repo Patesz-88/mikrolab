@@ -28,6 +28,8 @@ signal state: std_logic;
 signal got_shift: std_logic;
 signal got_key_up: std_logic;
 signal write: std_logic;
+signal ready: std_logic;
+signal ready_ack: std_logic;
 
 begin
   
@@ -39,7 +41,9 @@ DECODER: entity work.character_ty_decoder(rtl)
         data_in => ps2_in,
         data_out => ascii_out,
         shift => got_shift,
-        release => got_key_up
+        release => got_key_up,
+        rx_ready => ready,
+        ready_ack => ready_ack
 );
 
 FSM: entity work.character_state_machine(char_SM)

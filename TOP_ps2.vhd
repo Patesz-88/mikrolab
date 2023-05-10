@@ -22,7 +22,6 @@ architecture topmodule of ps2_topmodule is
 --constant cpb:         integer   := 20833;
   constant cpb:         integer   := 50;
   
-  signal valami: std_logic;
   signal wd_kick: std_logic;
   signal ready: std_logic;
   signal rx2bus_and_p: std_logic_vector(8 downto 0);
@@ -32,11 +31,13 @@ architecture topmodule of ps2_topmodule is
   signal ascii: std_logic_vector (7 downto 0);
   signal got_shift: std_logic;
   signal got_key_up: std_logic;
-  signal capital: std_logic;
   signal char: std_logic_vector (15 downto 0);
   signal write2fifo: std_logic;
   signal parity: std_logic;
   signal empty: std_logic;
+  
+  --signal rx_ready: std_logic;
+  signal ready_ack: std_logic;
     
   
   begin
@@ -59,7 +60,7 @@ architecture topmodule of ps2_topmodule is
                 
 		got_falling_edge_on_rx			    => wd_kick,
 		ready_2_read				             => ready,
-		read_strobe				              => '0',
+		read_strobe				              => ready_ack,
 		read_strobe_ack				          => open,
 		data_out					        	       => rx2bus_and_p,
 		ready_2_write			    	    	   => open,
@@ -85,11 +86,13 @@ architecture topmodule of ps2_topmodule is
   port map(
         clk => clk,
         reset_n => as_reset_n,
-        state => capital,
+        state => state,
         data_in => rx2bus,
         data_out => ascii,
         shift => got_shift,
-        release => got_key_up
+        release => got_key_up,
+        rx_ready => ready,
+        ready_ack => ready_ack
 );
 
 FSM: entity work.character_state_machine(char_SM)
@@ -101,14 +104,14 @@ FSM: entity work.character_state_machine(char_SM)
         got_shift => got_shift,
         ascii_in => ascii,
         wd_kick => open,
-        capital => capital,
+        capital => state,
         data_out => char,
         write => write2fifo
   );
   
   WD: entity work.watchdog(rtl)
   generic map(
-            countdown => 8
+            countdown => 1024
     )
 
     port map (
