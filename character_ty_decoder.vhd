@@ -11,9 +11,7 @@ entity character_ty_decoder is
         data_in:    in std_logic_vector (7 downto 0);
         data_out:   out std_logic_vector (7 downto 0);
         shift:      out std_logic;
-        release:    out std_logic;
-        rx_ready:   in  std_logic;
-        ready_ack:  out std_logic
+        release:    out std_logic
 
     );
 
@@ -34,15 +32,13 @@ begin
             ascii<="00000000";
             shift<='0';
             release <='0';
-            ready_ack <= '0';
 
         elsif (rising_edge(clk))then
           ps2_code:=data_in;
           release<='0';
           shift<='0';
           ascii<="00000000";
-          ready_ack <= '0';
-          if('1' = rx_ready) then
+          if(ps2_code/=last_code) then
             case ps2_code is
                 when x"16" => ascii <= x"31"; -- 1
                 when x"1E" => ascii <= x"32"; -- 2
@@ -119,13 +115,12 @@ begin
                   WHEN x"1A" => ascii <= x"5A"; --Z
                   WHEN OTHERS => NULL;
                 END CASE;
-                
               END IF;
-              ready_ack <= '1';
+
           end if;
 
         end if;
-        --last_code<=ps2_code;
+        last_code<=ps2_code;
         data_out<= ascii;
     end process;
 
