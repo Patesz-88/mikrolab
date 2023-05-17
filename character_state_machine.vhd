@@ -32,7 +32,7 @@ architecture char_SM of character_state_machine is
   begin
     
   FSM: process(clk, reset_n) begin
-if('0' = reset_n) then 
+if('0' = reset_n) then --reset
     capital <= '0';
     data_out <= "0000000000000000";
     write <= '0'; 
@@ -41,22 +41,22 @@ if('0' = reset_n) then
     last_char <= "00000000";
     counter <= 0;
     wd_kick <= '1';
-elsif(rising_edge(clk)) then
+elsif(rising_edge(clk)) then  --handler
     wd_kick <= '1';
     write <= '0';
-    if("00000000" = ascii_in) then
+    if("00000000" = ascii_in) then  --shift or key up
       wd_kick <= '1';
-      if('1' = got_key_up) then await_key_up <= '1';
-   	  elsif('1' = got_shift) then is_shift_down <= not await_key_up; await_key_up <= '0';
+      if('1' = got_key_up) then await_key_up <= '1';  --handle key up signal, prepare for released key
+   	  elsif('1' = got_shift) then is_shift_down <= not await_key_up; await_key_up <= '0'; --got shift, toggles capital letters
  	    end if;
- 	  elsif('1' = await_key_up and last_char = ascii_in) then
+ 	  elsif('1' = await_key_up and last_char = ascii_in) then --we release the key we have pressed down last
  	    wd_kick <= '0';
  	    counter <= counter - 1;
  	    data_out <= "00000000"&last_char;
  	    write <= '1';
  	    last_char <= "00000000";
  	    await_key_up <= '0';
- 	  elsif('1' = await_key_up) then
+ 	  elsif('1' = await_key_up) then  --release a key we didnt press last
  	    wd_kick <= '0';
  	    counter <= counter - 1;
  	    data_out <= "00000010"&ascii_in;
@@ -66,12 +66,13 @@ elsif(rising_edge(clk)) then
  	    data_out <= "00000001"&last_char;
  	    last_char <= "00000000";
  	    wd_kick <= '0';
- 	  elsif((last_char /= ascii_in) and ("00000000" /= last_char)) then
+ 	  elsif((last_char /= ascii_in ) and ("00000000" /= last_char)) then
  	    wd_kick <= '0'; 
  	    data_out <= "00000100"&last_char;
  	    write <= '1';
  	    last_char <= ascii_in;
- 	  else last_char <= ascii_in; counter <= counter + 1; end if;
+ 	  else last_char <= ascii_in; counter <= counter + 1; 
+ 	  end if;
  	  capital <= is_shift_down;
 end if;
 
