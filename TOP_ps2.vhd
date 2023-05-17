@@ -44,8 +44,8 @@ architecture topmodule of ps2_topmodule is
   
   RECIEVER: entity work.uart_transceiver(rtl)
   generic  map(
-    metastable_filter_bypass_host     => true,
-		metastable_filter_bypass_recover  => true,
+    metastable_filter_bypass_host     => false,
+		metastable_filter_bypass_recover  => false,
 		clk_pulses_per_baud              => cpb,
 		transmit_receiver_error_codes	   => true,
 		data_bits							                 => 9,

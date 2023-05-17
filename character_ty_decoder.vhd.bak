@@ -124,7 +124,7 @@ begin
                 END CASE;
                 
               END IF;
-              --  ready_ack <= '1';
+              --ready_ack <= '1';
           end if;
 
         end if;
