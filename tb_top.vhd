@@ -40,13 +40,11 @@ architecture top_testbench of testbench_top is
   reset_n <= '1';
   wait for 4*clk_p;
   
-  --new packet
   wait for 1*cpb*clk_p;
-  rx <= '0';            --start bit
+  rx <= '0';
   
   wait for 1*cpb*clk_p;
-  --data bits
-  rx <= '0';  --LSB
+  rx <= '0';
   wait for 1*cpb*clk_p;
   rx <= '0';
   wait for 1*cpb*clk_p;
@@ -60,19 +58,16 @@ architecture top_testbench of testbench_top is
   wait for 1*cpb*clk_p;
   rx <= '0';
   wait for 1*cpb*clk_p;
-  rx <= '0';  --MSB
-  --'a'
+  rx <= '0';
   
   wait for 1*cpb*clk_p;
-  rx <= '0';            --parity bit
+  rx <= '0';
   
   wait for 1*cpb*clk_p;
-  rx <= '1';            --stop bit(s)
+  rx <= '1';
   
   wait for 4*cpb*clk_p;
   
-  --new packet
-  
   wait for 1*cpb*clk_p;
   rx <= '0';
   
@@ -92,14 +87,13 @@ architecture top_testbench of testbench_top is
   rx <= '0';
   wait for 1*cpb*clk_p;
   rx <= '0';
-  --key up
   
   wait for 1*cpb*clk_p;
   rx <= '0';
   
   wait for 1*cpb*clk_p;
   rx <= '1';
-  --NEW PACKET
+  
   wait for 5*cpb*clk_p;
   rx <= '0';
   
@@ -119,7 +113,6 @@ architecture top_testbench of testbench_top is
   rx <= '0';
   wait for 1*cpb*clk_p;
   rx <= '0';
-  --'a'*/
   
   wait for 1*cpb*clk_p;
   rx <= '0';
@@ -130,277 +123,7 @@ architecture top_testbench of testbench_top is
   wait for 4*cpb*clk_p;
   
   wait for 4*cpb*clk_p;
-  --new packet*/
   
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '1';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '1';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-   --shift
-  
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  
-  wait for 1*cpb*clk_p;
-  rx <= '1';
-  
-  wait for 5*cpb*clk_p;
-  --new packet
-  wait for 1*cpb*clk_p;
-  rx <= '0';            --start bit
-  
-  wait for 1*cpb*clk_p;
-  --data bits
-  rx <= '1';  --LSB
-  wait for 1*cpb*clk_p;
-  rx <= '1';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '1';
-  wait for 1*cpb*clk_p;
-  rx <= '1';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';  --MSB
-  --'h'
-  
-  wait for 1*cpb*clk_p;
-  rx <= '0';            --parity bit: even
-  
-  wait for 1*cpb*clk_p;
-  rx <= '1';            --stop bit(s)
-  
-  wait for 4*cpb*clk_p;
-  
-  --new packet*/
-  
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-   --key up
-  
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  
-  wait for 1*cpb*clk_p;
-  rx <= '1';
-  
-  wait for 5*cpb*clk_p;
-  
-  --new packet*/
-  wait for 1*cpb*clk_p;
-  rx <= '0';            --start bit
-  
-  wait for 1*cpb*clk_p;
-  --data bits
-  rx <= '1';  --LSB
-  wait for 1*cpb*clk_p;
-  rx <= '1';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '1';
-  wait for 1*cpb*clk_p;
-  rx <= '1';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';  --MSB
-  --'h'
-  
-  wait for 1*cpb*clk_p;
-  rx <= '0';            --parity bit: even
-  
-  wait for 1*cpb*clk_p;
-  rx <= '1';            --stop bit(s)
-  
-  wait for 4*cpb*clk_p;
-  
-  --new packet*/
-  
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-   --key up
-  
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  
-  wait for 1*cpb*clk_p;
-  rx <= '1';
-  
-  wait for 5*cpb*clk_p;
-  --new packet*/
-  
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '1';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '1';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-   --shift
-  
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  
-  wait for 1*cpb*clk_p;
-  rx <= '1';
-  
-  wait for 5*cpb*clk_p;
-  
- --new packet*/
-  wait for 1*cpb*clk_p;
-  rx <= '0';            --start bit
-  
-  wait for 1*cpb*clk_p;
-  --data bits
-  rx <= '0';  --LSB
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '1';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '1';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';  --MSB
-  --'e'
-  
-  wait for 1*cpb*clk_p;
-  rx <= '0';            --parity bit: even
-  
-  wait for 1*cpb*clk_p;
-  rx <= '1';            --stop bit(s)
-  
-  wait for 4*cpb*clk_p;
-  --new packet
-  
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  --key up
-  
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  
-  wait for 1*cpb*clk_p;
-  rx <= '1';
-  --NEW PACKET
-  wait for 5*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  --data bits
-  rx <= '0';  --LSB
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '1';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '1';
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  wait for 1*cpb*clk_p;
-  rx <= '0';  --MSB
-  --'e'
-  
-  wait for 1*cpb*clk_p;
-  rx <= '0';
-  
-  wait for 1*cpb*clk_p;
-  rx <= '1';
-  
-  wait for 4*cpb*clk_p;
   
     
 end process;

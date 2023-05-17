@@ -247,8 +247,6 @@ architecture rtl of acu_mmio_peripheral_template is
 									
 									if ( unsigned(address_from_acu) = my_address_1 ) then
 									state <= read_req;
-									elsif ( unsigned(address_from_acu) = my_address_2 ) then
-									state <= read_flag;
 									else
 										state <= wait_for_deassert_strobes;
 									end if;
