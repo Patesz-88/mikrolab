@@ -7,8 +7,8 @@ entity acu_mmio_peripheral_template is
 		metastable_filter_bypass_acu:			boolean;
 		metastable_filter_bypass_recover_fsm_n:	boolean;
 		generate_intr:							boolean;
-		my_address_1:							integer range 0 to 65535
-		--my_address_2:							integer range 0 to 65535;
+		my_address_1:							integer range 0 to 65535;
+		my_address_2:							integer range 0 to 65535
 		--my_address_3:							integer range 0 to 65535
 		
 	);
@@ -42,7 +42,7 @@ entity acu_mmio_peripheral_template is
 	);
 end entity acu_mmio_peripheral_template;
 ---------------------------------------------------------------------------------------------------
-architecture rtl of acu_mmio_peripheral_template is
+architecture ps2_keyboard_controller of acu_mmio_peripheral_template is
 
 	-- Reset synchronizer resources
 	signal ff_reset_n:						std_logic;
@@ -66,11 +66,14 @@ architecture rtl of acu_mmio_peripheral_template is
 	signal user_intr_rqst:					std_logic;
 	signal user_intr_rqst_d:				std_logic;
 	signal user_intr_rqst_rising:			std_logic;
+	signal is_empty: std_logic;
 	
 	type state_t is (
 		idle,
 		write_1, write_2, write_3,
-		read_1, read_2, read_3,
+		read_req, read_1, read_2, read_3, read_4, read_5, read_end,
+		flag_req, flag_1, flag_2, flag_3, flag_4, flag_5, flag_end,
+		
 		wait_for_deassert_strobes,
 		error
 	);
@@ -102,7 +105,7 @@ architecture rtl of acu_mmio_peripheral_template is
   rx => rx,
   
   get_char => get_char,
-  user_logic_intr_output => user_logic_intr_output,
+  is_empty => is_empty,
   char_req => char_req
   );
 	
@@ -173,7 +176,7 @@ architecture rtl of acu_mmio_peripheral_template is
 				user_intr_rqst_d <= '0';
 				intr_rqst <= '0';
 			elsif ( rising_edge(clk) ) then
-				user_intr_rqst_d <= user_intr_rqst;
+				user_intr_rqst_d <= not is_empty;
 				
 				if ( intr_ack_internal = '1' ) then
 					intr_rqst <= '0';
@@ -247,6 +250,8 @@ architecture rtl of acu_mmio_peripheral_template is
 									
 									if ( unsigned(address_from_acu) = my_address_1 ) then
 									state <= read_req;
+									elsif ( unsigned(address_from_acu) = my_address_2 ) then
+									state <= flag_req;
 									else
 										state <= wait_for_deassert_strobes;
 									end if;
@@ -288,12 +293,15 @@ architecture rtl of acu_mmio_peripheral_template is
 				          -- ...
 									-- ...
 									-- ...
-									
-				when read_3		=>	NULL;
-				          -- ...
-									-- ...
-									-- ...
-				
+				when flag_req => state <= flag_1;
+				when flag_1 => state <= flag_2;
+				  when flag_2 => state <= flag_3;
+				    when flag_3 => state <= flag_4;
+				      when flag_4 => state <= flag_5;
+				        when flag_5 => state <= flag_end;
+				          when flag_end => state <= wait_for_deassert_strobes;
+				                    s_data_2_acu <= (others => is_empty);
+													
 				----------------------------------------------------------------------------------------------
 				
 				when wait_for_deassert_strobes	=>	if ( read_strobe_from_acu_internal = '0' and write_strobe_from_acu_internal = '0' ) then
@@ -333,5 +341,5 @@ architecture rtl of acu_mmio_peripheral_template is
 	
 	invalid_state_error <= 	adapter_invalid_state_error or user_fsm_invalid_state_error;
 
-end architecture rtl;
+end architecture ps2_keyboard_controller;
 ---------------------------------------------------------------------------------------------------
