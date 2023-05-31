@@ -10,7 +10,7 @@ entity ps2_topmodule is
   rx: in std_logic;
   
   get_char: out std_logic_vector(15 downto 0);
-  user_logic_intr_output: out std_logic;
+  is_empty: out std_logic;
   char_req: in std_logic
   );
   
@@ -44,8 +44,8 @@ architecture topmodule of ps2_topmodule is
   
   RECIEVER: entity work.uart_transceiver(rtl)
   generic  map(
-    metastable_filter_bypass_host     => true,
-		metastable_filter_bypass_recover  => true,
+    metastable_filter_bypass_host     => false,
+		metastable_filter_bypass_recover  => false,
 		clk_pulses_per_baud              => cpb,
 		transmit_receiver_error_codes	   => true,
 		data_bits							                 => 9,
@@ -163,7 +163,7 @@ FSM: entity work.character_state_machine(char_SM)
 --------------------------------------------------------------------------
 	);
   
-  user_logic_intr_output <= not empty;
+  is_empty <= empty;
   
   PARITY_CHECK: process(rx2bus_and_p) 
   variable tmp: STD_LOGIC;
